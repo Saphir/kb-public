@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>甜歌 · 个人收藏曲目册</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 18V5.5l10-2v12' fill='none' stroke='%23a8475e' stroke-width='1.6'/%3E%3Ccircle cx='6.5' cy='18' r='2.6' fill='%23a8475e'/%3E%3Ccircle cx='16.5' cy='15.6' r='2.6' fill='%23a8475e'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@500;700&family=Noto+Sans+SC:wght@300;400;500&display=swap">
+<style>
+:root{
+  --paper:#fbf8f3;
+  --paper-2:#f5f0e7;
+  --ink:#2a2520;
+  --ink-soft:#5c5650;
+  --muted:#8d8479;
+  --rule:#e3d9cb;
+  --accent:#a8475e;
+  --accent-soft:#f0dfe2;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  font-weight:400;
+  -webkit-font-smoothing:antialiased;
+  line-height:1.6;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:56px 32px 72px}
+
+/* ===== 抬头 ===== */
+.head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;padding-bottom:18px;border-bottom:2px solid var(--ink)}
+.kicker{font-size:11px;letter-spacing:.28em;color:var(--muted);text-transform:uppercase;margin-bottom:10px}
+h1{font-family:"Noto Serif SC","Songti SC","SimSun",serif;font-weight:700;font-size:44px;line-height:1.1;margin:0;letter-spacing:.02em}
+.head-note{font-size:12px;color:var(--muted);text-align:right;line-height:1.7}
+.head-note b{color:var(--accent);font-weight:500;font-size:15px}
+
+/* ===== 检索条 ===== */
+.tools{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:26px 0 14px}
+.search{
+  flex:1 1 320px;min-width:0;display:flex;align-items:center;gap:10px;
+  background:#fff;border:1px solid var(--rule);border-radius:2px;padding:0 14px;height:44px;
+  transition:border-color .18s, box-shadow .18s;
+}
+.search:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.search svg{width:16px;height:16px;flex:0 0 auto;stroke:var(--muted)}
+.search input{
+  flex:1 1 auto;min-width:0;border:0;outline:0;background:transparent;
+  font:inherit;font-size:14px;color:var(--ink);
+}
+.search input::placeholder{color:#b3aaa0}
+.count{font-size:12px;color:var(--muted);letter-spacing:.04em;white-space:nowrap}
+.count b{color:var(--ink);font-weight:500}
+
+/* ===== 标签 ===== */
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 22px}
+.chip{
+  border:1px solid var(--rule);background:transparent;color:var(--ink-soft);
+  font:inherit;font-size:12px;padding:5px 12px;border-radius:999px;cursor:pointer;
+  transition:all .15s;
+}
+.chip:hover{border-color:var(--accent);color:var(--accent)}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+
+/* ===== 表格 ===== */
+.tablewrap{overflow-x:auto;border-top:1px solid var(--rule)}
+table{width:100%;min-width:760px;border-collapse:collapse;table-layout:fixed}
+col.c1{width:23%} col.c2{width:13%} col.c3{width:15%} col.c4{width:20%} col.c5{width:29%}
+thead th{
+  text-align:left;font-size:11px;font-weight:500;letter-spacing:.14em;color:var(--muted);
+  padding:12px 14px 10px;border-bottom:1px solid var(--rule);white-space:nowrap;
+}
+tbody td{
+  padding:18px 14px;border-bottom:1px solid var(--rule);vertical-align:top;font-size:14px;
+  overflow-wrap:break-word;
+}
+tbody tr:hover{background:var(--paper-2)}
+.song{font-family:"Noto Serif SC","Songti SC",serif;font-weight:700;font-size:18px;letter-spacing:.01em}
+.song span{display:block;font-family:"Noto Sans SC",sans-serif;font-weight:400;font-size:11px;color:var(--muted);letter-spacing:.06em;margin-top:4px}
+.singer{color:var(--ink)}
+.composer{color:var(--ink-soft);font-size:13px}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:11px;color:var(--accent);background:var(--accent-soft);padding:2px 8px;border-radius:2px;letter-spacing:.04em}
+.lyric{color:var(--ink-soft);font-size:13px;line-height:1.75}
+.lyric em{font-style:normal;color:var(--muted)}
+mark{background:#f6e2b8;color:var(--ink);padding:0 2px;border-radius:2px}
+
+/* ===== 空态 ===== */
+.empty{padding:56px 14px;text-align:center;color:var(--muted);font-size:13px;letter-spacing:.03em}
+.empty b{display:block;color:var(--ink);font-family:"Noto Serif SC",serif;font-size:17px;font-weight:500;margin-bottom:6px}
+
+/* ===== 页脚 ===== */
+.foot{margin-top:22px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--muted);line-height:1.8}
+.foot code{background:var(--paper-2);border:1px solid var(--rule);padding:1px 5px;border-radius:2px;font-size:11px;color:var(--ink-soft)}
+
+@media (max-width:640px){
+  .wrap{padding:36px 18px 56px}
+  h1{font-size:32px}
+  .head-note{text-align:left}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="head">
+    <div>
+      <div class="kicker">Personal Songbook</div>
+      <h1>甜歌</h1>
+    </div>
+    <div class="head-note">
+      收藏 <b id="total">2</b> 首<br>
+      原样收录 · 不编不评
+    </div>
+  </header>
+
+  <div class="tools">
+    <label class="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg>
+      <input id="q" type="search" placeholder="搜歌名、歌手、作曲、标签、歌词…" autocomplete="off" aria-label="检索歌曲">
+    </label>
+    <div class="count" id="count">显示 <b>2</b> / 共 2</div>
+  </div>
+
+  <div class="chips" id="chips" role="group" aria-label="按标签筛选"></div>
+
+  <div class="tablewrap">
+    <table>
+      <colgroup><col class="c1"><col class="c2"><col class="c3"><col class="c4"><col class="c5"></colgroup>
+      <thead>
+        <tr><th>歌名</th><th>歌手</th><th>作曲</th><th>标签</th><th>经典歌词</th></tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <div class="empty" id="empty" hidden>
+      <b>没有匹配的歌</b>
+      换个词，或点「全部」看看整个歌单
+    </div>
+  </div>
+
+  <div class="foot">
+    <div>标签为初版归类，可直接改；年份仅作备注，未单列成表列。</div>
+    <div>新增一首：在 <code>SONGS</code> 里复制一行，改五个字段。</div>
+  </div>
+
+</div>
+
+<script>
+/* ===== 数据：新增歌曲改这里 =====
+   title 歌名 / singer 歌手 / composer 作曲 / year 发行年(仅备注) / tags 标签 / lyric 经典歌词(可留空) */
+const SONGS = [
+  {
+    title: "圈住你",
+    singer: "一口甜",
+    composer: "苏效音",
+    year: "2019",
+    tags: ["甜歌", "暗恋", "轻快"],
+    lyric: "把控好时机 要引你注意，真的有些伤脑筋，疑虑太多余 为难了空气，圈住你"
+  },
+  {
+    title: "不灵不灵",
+    singer: "很美味",
+    composer: "何志为",
+    year: "2022",
+    tags: ["甜歌", "俏皮", "叠词"],
+    lyric: "一见你双眼呢 忘却不了你，俘获了我的心，不理我 绝对不行"
+  }
+];
+
+/* ===== 检索 ===== */
+const qEl = document.getElementById("q");
+const rowsEl = document.getElementById("rows");
+const chipsEl = document.getElementById("chips");
+const countEl = document.getElementById("count");
+const emptyEl = document.getElementById("empty");
+const totalEl = document.getElementById("total");
+
+let activeTag = null;
+
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+function hl(text, q) {
+  const safe = esc(text);
+  if (!q) return safe;
+  const eq = esc(q).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return safe.replace(new RegExp(eq, "gi"), m => "<mark>" + m + "</mark>");
+}
+
+function buildChips() {
+  const all = ["全部", ...Array.from(new Set(SONGS.flatMap(s => s.tags)))];
+  chipsEl.innerHTML = all.map(t =>
+    `<button class="chip" data-tag="${esc(t)}" aria-pressed="${t === "全部" ? "true" : "false"}">${esc(t)}</button>`
+  ).join("");
+  chipsEl.querySelectorAll(".chip").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const t = btn.dataset.tag;
+      activeTag = (t === "全部") ? null : t;
+      chipsEl.querySelectorAll(".chip").forEach(b =>
+        b.setAttribute("aria-pressed", String((activeTag === null && b.dataset.tag === "全部") || b.dataset.tag === activeTag))
+      );
+      render();
+    });
+  });
+}
+
+function render() {
+  const q = qEl.value.trim();
+  const list = SONGS.filter(s => {
+    const okTag = !activeTag || s.tags.includes(activeTag);
+    if (!okTag) return false;
+    if (!q) return true;
+    const hay = [s.title, s.singer, s.composer, s.tags.join(" "), s.lyric].join(" ").toLowerCase();
+    return hay.includes(q.toLowerCase());
+  });
+
+  rowsEl.innerHTML = list.map(s => `
+    <tr>
+      <td><div class="song">${hl(s.title, q)}<span>${esc(s.year)} · SINGLE</span></div></td>
+      <td class="singer">${hl(s.singer, q)}</td>
+      <td class="composer">${s.composer ? hl(s.composer, q) : "<em>待核实</em>"}</td>
+      <td><div class="tags">${s.tags.map(t => `<span class="tag">${hl(t, q)}</span>`).join("")}</div></td>
+      <td class="lyric">${s.lyric ? "「" + hl(s.lyric, q) + "」" : "<em>未收录</em>"}</td>
+    </tr>
+  `).join("");
+
+  countEl.innerHTML = `显示 <b>${list.length}</b> / 共 ${SONGS.length}`;
+  emptyEl.hidden = list.length > 0;
+}
+
+totalEl.textContent = SONGS.length;
+qEl.addEventListener("input", render);
+buildChips();
+render();
+</script>
+</body>
+</html>
